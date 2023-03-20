@@ -5,7 +5,6 @@ import Dashboard from './pages/dashboard/Dashboard';
 
 function App() {
   const user = localStorage.getItem('token');
-  console.log("User: " + user);
 
   return (
     <BrowserRouter>

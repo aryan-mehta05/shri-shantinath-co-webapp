@@ -1,20 +1,15 @@
-import React from 'react'
-import "./Dashboard.css"
+import React from 'react';
+import Navbar from "../../components/navbar/Navbar";
+import "./Dashboard.css";
 
 const Dashboard = () => {
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  };
 
   return (
     <div>
-      Dashboard
-      <button onClick={handleLogout}>
-				Logout
-			</button>
+      <Navbar />
+      DASHBOARD
     </div>
   )
-}
+};
 
 export default Dashboard;

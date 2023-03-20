@@ -38,36 +38,38 @@ const Login = () => {
   };
 
   return (
-    <div className="box">
-      <form autoComplete="off" onSubmit={handleSubmit}>
-        <h2>Sign in</h2>
-        <div className="inputBox">
-          <input
-            type="text"
-            name="username"
-            required="required"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <span>Username</span>
-          <i />
-        </div>
-        <div className="inputBox">
-          <input
-            type="password"
-            name="password"
-            required="required"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <span>Password</span>
-          <i />
-        </div>
-        <div className="links">
-          <a href="#">Forgot Password ?</a>
-        </div>
-        <input type="submit" defaultValue="Login" />
-      </form>
+    <div className="login-background">
+      <div className="box">
+        <form autoComplete="off" onSubmit={handleSubmit}>
+          <h2>Sign in</h2>
+          <div className="inputBox">
+            <input
+              type="text"
+              name="username"
+              required="required"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <span>Username</span>
+            <i />
+          </div>
+          <div className="inputBox">
+            <input
+              type="password"
+              name="password"
+              required="required"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <span>Password</span>
+            <i />
+          </div>
+          <div className="links">
+            <a href="#">Forgot Password ?</a>
+          </div>
+          <input type="submit" defaultValue="Login" />
+        </form>
+      </div>
     </div>
   );
 };
