@@ -15,6 +15,11 @@ const userDetailsSchema = new mongoose.Schema(
       unique: true, 
       index: true, 
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+      required: true,
+    }
   },
   {
     collection: "UserInfo",
@@ -38,12 +43,13 @@ const validate = (data) => {
 
 async function insertUser(username, password) {
   if (!password) {
-    throw new Error("Password is required");
+    throw new Error("Password is required!");
   }
 
   const user = new UserInfo({
     username,
     password,
+    isAdmin,
   });
 
   return user.save();

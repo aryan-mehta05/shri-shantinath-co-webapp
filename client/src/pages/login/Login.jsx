@@ -23,7 +23,8 @@ const Login = () => {
     }).then((response) => response.json()).then((data) => {
         console.log(data);
         if (data.status === "Ok") {
-          localStorage.setItem("token", data.data);
+          localStorage.setItem("token", data.data[0]);
+          localStorage.setItem("isAdmin", data.data[1]);
           window.location = "/";
         }
       }).catch((error) => {
@@ -33,6 +34,7 @@ const Login = () => {
           error.response.status <= 500
         ) {
           setError(error.response.data.message);
+          alert("Error: " + error.response.data.message);
         }
       });
   };
