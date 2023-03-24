@@ -1,28 +1,13 @@
-.navbar {
-  width: 100vw;
-  height: 13vh;
-  background-color: #faebd8;
-  padding: 10px 50px;
+.MainDash{
+  /* padding-top: 1rem; */
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
-.navbar img {
-  width: 16rem;
-  height: 4.6rem;
-}
-
-.navbar button {
-  width: 8rem;
-  height: 2.5rem;
-  font-size: 1rem;
-  font-weight: 400;
-  border: none;
-  border-radius: 20px;
-  box-shadow: 0px 0px 8px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar button:hover {
-  box-shadow: 0px 0px 8px 8px rgba(255, 255, 255, 0.7);
+@media screen and (max-width: 1200px) {
+  .MainDash{
+      margin-top: 2rem;
+  }
 }

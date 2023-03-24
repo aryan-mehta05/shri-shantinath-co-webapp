@@ -1,15 +1,17 @@
-import React from 'react';
+import React from "react";
 import Navbar from "../../components/navbar/Navbar";
 import "./AdminDashboard.css";
+import Sidebar from "../../components/sidebar/Sidebar";
 
 const AdminDashboard = () => {
-
   return (
-    <div>
-      <Navbar />
-      ADMIN DASHBOARD
+    <div className="App">
+      <div className="AppGlass">
+        <Sidebar />
+        <Navbar />
+      </div>
     </div>
-  )
+  );
 };
 
 export default AdminDashboard;

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./Login.css";
+import { IonIcon } from "@ionic/react";
+import { mailOutline, lockClosedOutline } from "ionicons/icons";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -20,16 +22,22 @@ const Login = () => {
         username,
         password,
       }),
-    }).then((response) => response.json()).then((data) => {
+    })
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
         if (data.status === "Ok") {
           localStorage.setItem("token", data.data[0]);
           localStorage.setItem("isAdmin", data.data[1]);
           window.location = "/";
+        } else {
+          setError("Invalid username or password");
+          alert("Error: Invalid username or password");
         }
-      }).catch((error) => {
+      })
+      .catch((error) => {
         if (
-          error.response && 
+          error.response &&
           error.response.status >= 400 &&
           error.response.status <= 500
         ) {
@@ -40,39 +48,41 @@ const Login = () => {
   };
 
   return (
-    <div className="login-background">
-      <div className="box">
-        <form autoComplete="off" onSubmit={handleSubmit}>
-          <h2>Sign in</h2>
-          <div className="inputBox">
-            <input
-              type="text"
-              name="username"
-              required="required"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <span>Username</span>
-            <i />
-          </div>
-          <div className="inputBox">
-            <input
-              type="password"
-              name="password"
-              required="required"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <span>Password</span>
-            <i />
-          </div>
-          <div className="links">
-            <a href="#">Forgot Password ?</a>
-          </div>
-          <input type="submit" defaultValue="Login" />
-        </form>
+    <section>
+      <div className="form-box">
+        <div className="form-value">
+          <form action="" onSubmit={handleSubmit}>
+            <h2>Login</h2>
+            <div className="inputbox">
+              <IonIcon icon={mailOutline} />
+              <input
+                type="text"
+                name="username"
+                required="required"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <label htmlFor="">Username</label>
+            </div>
+            <div className="inputbox">
+              <IonIcon icon={lockClosedOutline} />
+              <input
+                type="password"
+                name="password"
+                required="required"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label htmlFor="">Password</label>
+            </div>
+            <div className="forget">
+              <a href="#">Forgot Password</a>
+            </div>
+            <button>Log in</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

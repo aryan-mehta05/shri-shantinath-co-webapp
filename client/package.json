@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@iconscout/react-unicons": "^2.0.0",
+    "@ionic/react": "^6.6.3",
     "axios": "^1.3.4",
+    "framer-motion": "^10.8.5",
     "mongodb": "^5.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
