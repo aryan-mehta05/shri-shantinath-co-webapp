@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import { IonIcon } from "@ionic/react";
 import { mailOutline, lockClosedOutline } from "ionicons/icons";
+import Logo from "../../assets/shri.png";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -52,7 +53,7 @@ const Login = () => {
       <div className="form-box">
         <div className="form-value">
           <form action="" onSubmit={handleSubmit}>
-            <h2>Login</h2>
+            <img src={Logo} alt="logo" />
             <div className="inputbox">
               <IonIcon icon={mailOutline} />
               <input
