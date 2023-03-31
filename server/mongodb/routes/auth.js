@@ -1,5 +1,5 @@
 import express from "express";
-import UserInfo from "../mongodb/models/userDetails.js";
+import UserInfo from "../models/userDetails.js";
 import bcrypt from "bcryptjs";
 import Joi from "joi";
 
