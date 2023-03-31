@@ -12,14 +12,14 @@ const userDetailsSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      unique: true, 
-      index: true, 
+      unique: true,
+      index: true,
     },
     isAdmin: {
       type: Boolean,
       default: false,
       required: true,
-    }
+    },
   },
   {
     collection: "UserInfo",
@@ -27,9 +27,9 @@ const userDetailsSchema = new mongoose.Schema(
 );
 
 userDetailsSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET);
+  const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET);
   return token;
-}
+};
 
 const UserInfo = mongoose.model("UserInfo", userDetailsSchema);
 
@@ -39,7 +39,7 @@ const validate = (data) => {
     password: passwordComplexity().required().label("Password"),
   });
   return schema.validate(data);
-}
+};
 
 async function insertUser(username, password) {
   if (!password) {
