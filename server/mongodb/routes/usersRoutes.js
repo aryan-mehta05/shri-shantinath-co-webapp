@@ -1,8 +1,8 @@
 // ROUTE USED TO REGISTER NEW USER (SIGN UP)
 
 import express from "express";
-import UserInfo, { validate } from "../mongodb/models/userDetails";
 import bcrypt from "bcryptjs";
+import UserInfo, { validate } from "../mongodb/models/userModel.js";
 
 const router = express.Router();
 

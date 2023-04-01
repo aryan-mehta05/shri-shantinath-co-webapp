@@ -1,8 +1,8 @@
 import express from "express";
 import {
-  categoryControlller,
+  categoryController,
   createCategoryController,
-  deleteCategoryCOntroller,
+  deleteCategoryController,
   singleCategoryController,
   updateCategoryController,
 } from "./../controllers/categoryController.js";
@@ -17,12 +17,12 @@ router.post("/create-category", createCategoryController);
 router.put("/update-category/:id", updateCategoryController);
 
 //getALl category
-router.get("/get-category", categoryControlller);
+router.get("/get-category", categoryController);
 
 //single category
 router.get("/single-category/:slug", singleCategoryController);
 
 //delete category
-router.delete("/delete-category/:id", deleteCategoryCOntroller);
+router.delete("/delete-category/:id", deleteCategoryController);
 
 export default router;

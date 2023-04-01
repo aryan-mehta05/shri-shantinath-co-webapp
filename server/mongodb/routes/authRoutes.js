@@ -1,7 +1,7 @@
 import express from "express";
-import UserInfo from "../models/userDetails.js";
 import bcrypt from "bcryptjs";
 import Joi from "joi";
+import UserInfo from "../models/userModel.js";
 
 const router = express.Router();
 

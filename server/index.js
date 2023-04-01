@@ -3,8 +3,8 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 
 import connectDB from "./mongodb/connect.js";
-// import regNewUserRoutes from "./routes/users.js";
-import loginRoutes from "./mongodb/routes/auth.js";
+// import regNewUserRoutes from "./routes/usersRoutes.js";
+import loginRoutes from "./mongodb/routes/authRoutes.js";
 import categoryRoutes from "./mongodb/routes/categoryRoutes.js";
 import productRoutes from "./mongodb/routes/productRoutes.js";
 

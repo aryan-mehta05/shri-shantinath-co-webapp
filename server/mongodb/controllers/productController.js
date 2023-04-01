@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const createProductController = async (req, res) => {
+const createProductController = async (req, res) => {
   try {
     const { name, description, category, quantity } = req.fields;
     const { photo } = req.files;
@@ -49,7 +49,7 @@ export const createProductController = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: "Product created successfully",
+      message: "Product created successfully!",
       product,
     });
   } catch (error) {
@@ -57,13 +57,13 @@ export const createProductController = async (req, res) => {
     res.status(500).json({
       success: false,
       error: error.message,
-      message: "Error in creating product",
+      message: "Error in creating product!",
     });
   }
 };
 
 //get all products
-export const getProductController = async (req, res) => {
+const getProductController = async (req, res) => {
   try {
     const products = await productModel
       .find({})
@@ -74,20 +74,20 @@ export const getProductController = async (req, res) => {
     res.status(200).send({
       success: true,
       counTotal: products.length,
-      message: "ALlProducts ",
+      message: "All products",
       products,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Erorr in getting products",
+      message: "Error in getting all products!",
       error: error.message,
     });
   }
 };
 // get single product
-export const getSingleProductController = async (req, res) => {
+const getSingleProductController = async (req, res) => {
   try {
     const product = await productModel
       .findOne({ slug: req.params.slug })
@@ -95,21 +95,21 @@ export const getSingleProductController = async (req, res) => {
       .populate("category");
     res.status(200).send({
       success: true,
-      message: "Single Product Fetched",
+      message: "Single product fetched!",
       product,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Eror while getitng single product",
+      message: "Error while fetching single product!",
       error,
     });
   }
 };
 
 // get photo
-export const productPhotoController = async (req, res) => {
+const productPhotoController = async (req, res) => {
   try {
     const product = await productModel.findById(req.params.pid).select("photo");
     if (product.photo.data) {
@@ -120,32 +120,32 @@ export const productPhotoController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Erorr while getting photo",
+      message: "Error while getting photo!",
       error,
     });
   }
 };
 
 //delete controller
-export const deleteProductController = async (req, res) => {
+const deleteProductController = async (req, res) => {
   try {
     await productModel.findByIdAndDelete(req.params.pid).select("-photo");
     res.status(200).send({
       success: true,
-      message: "Product Deleted successfully",
+      message: "Product deleted successfully!",
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error while deleting product",
+      message: "Error while deleting product!",
       error,
     });
   }
 };
 
 //upate products
-export const updateProductController = async (req, res) => {
+const updateProductController = async (req, res) => {
   try {
     const { name, description, category, quantity } = req.fields;
     const { photo } = req.files;
@@ -181,7 +181,7 @@ export const updateProductController = async (req, res) => {
 
     res.status(201).send({
       success: true,
-      message: "Product updated successfully",
+      message: "Product updated successfully!",
       product,
     });
   } catch (error) {
@@ -189,13 +189,13 @@ export const updateProductController = async (req, res) => {
     res.status(500).send({
       success: false,
       error,
-      message: "Error in updating product",
+      message: "Error in updating product!",
     });
   }
 };
 
 // product count
-export const productCountController = async (req, res) => {
+const productCountController = async (req, res) => {
   try {
     const total = await productModel.find({}).estimatedDocumentCount();
     res.status(200).send({
@@ -205,7 +205,7 @@ export const productCountController = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).send({
-      message: "Error in product count",
+      message: "Error in fetching product count!",
       error,
       success: false,
     });
@@ -213,7 +213,7 @@ export const productCountController = async (req, res) => {
 };
 
 // search product
-export const searchProductController = async (req, res) => {
+const searchProductController = async (req, res) => {
   try {
     const { keyword } = req.params;
     const resutls = await productModel
@@ -229,14 +229,14 @@ export const searchProductController = async (req, res) => {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: "Error In Search Product API",
+      message: "Error in search product API route!",
       error,
     });
   }
 };
 
 // get products by category
-export const productCategoryController = async (req, res) => {
+const productCategoryController = async (req, res) => {
   try {
     const category = await categoryModel.findOne({ slug: req.params.slug });
     const products = await productModel.find({ category }).populate("category");
@@ -250,7 +250,19 @@ export const productCategoryController = async (req, res) => {
     res.status(400).send({
       success: false,
       error,
-      message: "Error While Getting products",
+      message: "Error while getting products!",
     });
   }
+};
+
+export { 
+  createProductController, 
+  getProductController, 
+  getSingleProductController, 
+  productPhotoController, 
+  deleteProductController, 
+  updateProductController, 
+  productCountController, 
+  searchProductController, 
+  productCategoryController 
 };
