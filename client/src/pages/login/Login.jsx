@@ -79,7 +79,7 @@ const Login = () => {
             <div className="forget">
               <a href="#">Forgot Password</a>
             </div>
-            <button>Log in</button>
+            <button className="login-button">Log in</button>
           </form>
         </div>
       </div>

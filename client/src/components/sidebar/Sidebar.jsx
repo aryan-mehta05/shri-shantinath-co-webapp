@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
 import Logo from "../../assets/shri.png";
+import { useNavigate } from "react-router";
 import { UilSignOutAlt } from "@iconscout/react-unicons";
 import { SidebarData } from "../../data/Data.js";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 
 const Sidebar = () => {
+const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    localStorage.removeItem("isAdmin");
+    // localStorage.removeItem("cardIndex");
+    window.location.href = "/";
   };
   const [selected, setSelected] = useState(0);
-
   const [expanded, setExpaned] = useState(true);
 
   const sidebarVariants = {
@@ -40,7 +44,7 @@ const Sidebar = () => {
       >
         {/* logo */}
         <div className="logo">
-          <img src={Logo} alt="logo" />
+          <img className="logo-image" src={Logo} alt="logo" />
         </div>
 
         <div className="menu">
@@ -49,7 +53,10 @@ const Sidebar = () => {
               <div
                 className={selected === index ? "menuItem active" : "menuItem"}
                 key={index}
-                onClick={() => setSelected(index)}
+                onClick={() => {
+                  setSelected(index);
+                  navigate("/" + item.slug);
+                }}
               >
                 <item.icon />
                 <span>{item.heading}</span>

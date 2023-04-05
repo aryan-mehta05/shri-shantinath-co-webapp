@@ -10,18 +10,22 @@ export const SidebarData = [
   {
     icon: UilBook,
     heading: "Products",
+    slug: "products",
   },
   {
     icon: UilUsersAlt,
     heading: "Clients",
+    slug: "clients",
   },
   {
     icon: UilEdit,
     heading: "Sales Order",
+    slug: "sales-order",
   },
   {
     icon: UilClipboardAlt,
     heading: "Manage Products",
+    slug: "manage-products",
   },
 ];
 
@@ -33,6 +37,7 @@ export const cardsData = [
       boxShadow: "0px 10px 20px 0px #e0c6f5",
     },
     png: UilBook,
+    slug: "products",
   },
   {
     title: "Clients",
@@ -41,6 +46,7 @@ export const cardsData = [
       boxShadow: "0px 10px 20px 0px #FDC0C7",
     },
     png: UilUsersAlt,
+    slug: "clients",
   },
   {
     title: "Sales Order",
@@ -50,13 +56,15 @@ export const cardsData = [
       boxShadow: "0px 10px 20px 0px #F9D59B",
     },
     png: UilEdit,
+    slug: "sales-order",
   },
   {
-    title: "Manage Production",
+    title: "Manage Products",
     color: {
       backGround: "linear-gradient(180deg, #73c2fb 0%, #a1d9ff 100%)",
       boxShadow: "0px 10px 20px 0px #c4e1f9",
     },
     png: UilClipboardAlt,
+    slug: "manage-products",
   },
 ];

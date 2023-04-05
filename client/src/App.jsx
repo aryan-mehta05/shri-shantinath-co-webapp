@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login/Login";
 import AdminDashboard from "./pages/admin-dashboard/AdminDashboard";
 import UserDashboard from "./pages/user-dashboard/UserDashboard";
-import Products from "./pages/products/Products";
+import ManageProducts from "./pages/manage-products/ManageProducts";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -24,8 +24,8 @@ function App() {
       {user && !isAdmin() && (
         <Route path="/" exact element={<UserDashboard />} />
       )}
+      {user && (<Route path="/manage-products" element={<ManageProducts />} />)}
       <Route path="/login" exact element={<Login />} />
-      <Route path="/products" element={<Products />} />
       <Route path="/" element={<Navigate replace to="/login" />} />
     </Routes>
   );

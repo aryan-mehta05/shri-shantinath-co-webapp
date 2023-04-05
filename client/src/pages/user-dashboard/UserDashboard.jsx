@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
+import ControlPanel from "../../components/control-panel/ControlPanel";
 import "./UserDashboard.css";
 
 const UserDashboard = () => {
@@ -8,7 +8,7 @@ const UserDashboard = () => {
     <div className="App">
       <div className="AppGlass">
         <Sidebar />
-        <Navbar />
+        <ControlPanel />
       </div>
     </div>
   );

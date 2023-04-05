@@ -1,14 +1,14 @@
 import React from "react";
-import Navbar from "../../components/navbar/Navbar";
-import "./AdminDashboard.css";
 import Sidebar from "../../components/sidebar/Sidebar";
+import ControlPanel from "../../components/control-panel/ControlPanel";
+import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   return (
     <div className="App">
       <div className="AppGlass">
         <Sidebar />
-        <Navbar />
+        <ControlPanel />
       </div>
     </div>
   );

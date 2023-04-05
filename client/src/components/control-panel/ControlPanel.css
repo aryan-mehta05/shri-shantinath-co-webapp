@@ -1,0 +1,10 @@
+.dashboard-title {
+  margin-bottom: 2rem;
+}
+
+.MainDash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

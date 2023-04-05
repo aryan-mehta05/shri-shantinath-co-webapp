@@ -17,9 +17,8 @@ export default function Cards() {
             boxShadow: card.color.boxShadow,
           }}
           onClick={() => {
-            if (card.title === "Products") {
-              navigate("/products");
-            } // Add more else-if clauses for other cards
+            // localStorage.setItem("cardIndex", index);
+            navigate("/" + card.slug);
           }}
         >
           <div className="card-title">
