@@ -255,14 +255,14 @@ const productCategoryController = async (req, res) => {
   }
 };
 
-export { 
-  createProductController, 
-  getProductController, 
-  getSingleProductController, 
-  productPhotoController, 
-  deleteProductController, 
-  updateProductController, 
-  productCountController, 
-  searchProductController, 
-  productCategoryController 
+export {
+  createProductController,
+  getProductController,
+  getSingleProductController,
+  productPhotoController,
+  deleteProductController,
+  updateProductController,
+  productCountController,
+  searchProductController,
+  productCategoryController,
 };

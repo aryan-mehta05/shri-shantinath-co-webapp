@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
 import toast from "react-hot-toast";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { IoIosAlert } from 'react-icons/io';
+import { IoIosAlert } from "react-icons/io";
 // import { BiDotsVerticalRounded } from 'react-icons/bi';
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from "@material-ui/core";
 import "./ManageProducts.css";
 import { useNavigate } from "react-router-dom";
+import AddProducts from "./AddProducts";
 
 const ManageProducts = () => {
   const [categories, setCategories] = useState([]);
@@ -20,9 +21,9 @@ const ManageProducts = () => {
   const targetRef = useRef(null);
   const navigate = useNavigate();
 
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const iconSize = isMobile ? 15 : 20;
-  const updateMessageIconSize = isMobile ? 13: 20;
+  const updateMessageIconSize = isMobile ? 13 : 20;
 
   const handleCreateCategory = async (e) => {
     e.preventDefault();
@@ -128,13 +129,13 @@ const ManageProducts = () => {
 
   const handleScroll = () => {
     setTimeout(() => {
-      targetRef.current.scrollIntoView({ behavior: 'smooth' });
+      targetRef.current.scrollIntoView({ behavior: "smooth" });
     }, 100);
   };
 
   useEffect(() => {
     if (targetRef.current) {
-      targetRef.current.scrollIntoView({ behavior: 'smooth' });
+      targetRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
 
@@ -143,6 +144,7 @@ const ManageProducts = () => {
       <div className="AppGlass">
         <Sidebar />
         <div className="main-container">
+          <AddProducts />
           <div className="title-top">
             <h1 className="manage-products-title">Manage Products</h1>
             <button
@@ -180,49 +182,65 @@ const ManageProducts = () => {
                   />
                 </label>
               </div>
-              <button className="category-button" type="submit">Create</button>
+              <button className="category-button" type="submit">
+                Create
+              </button>
             </form>
           )}
           <hr className="main-divider" />
 
           <ul>
             {categories.map((category) => (
-                <li className="category-list-item" key={category._id}>
-                  <div className="category-list-left" onClick={() => {
-                    navigate("/" + category.slug);
-                  }}>
-                    <span className="category-name">{category.name}</span>
-                    <span className="category-rate">{category.rate}</span>
-                  </div>
+              <li className="category-list-item" key={category._id}>
+                <div
+                  className="category-list-left"
+                  onClick={() => {
+                    navigate(`/category/${category.slug}`);
+                  }}
+                >
+                  <span className="category-name">{category.name}</span>
+                  <span className="category-rate">{category.rate}</span>
+                </div>
 
-                  {/* <div className="util-dots">
+                {/* <div className="util-dots">
                     <button>
                       <BiDotsVerticalRounded size={20} />
                     </button>
                   </div> */}
 
-                  <div className="category-list-right">
-                    <button
-                      className="category-button edit-button"
-                      onClick={() => {
-                        setSelected(category);
-                        setSelectedCategory(category.name);
-                        setVisible(true);
-                        handleScroll();
-                      }}
-                    >
-                      <AiFillEdit size={iconSize} />
-                    </button>
-                    <button className="category-button delete-button" onClick={() => handleDelete(category._id)}><AiFillDelete size={iconSize} /></button>
-                  </div>
-                </li>
+                <div className="category-list-right">
+                  <button
+                    className="category-button edit-button"
+                    onClick={() => {
+                      setSelected(category);
+                      setSelectedCategory(category.name);
+                      setVisible(true);
+                      handleScroll();
+                    }}
+                  >
+                    <AiFillEdit size={iconSize} />
+                  </button>
+                  <button
+                    className="category-button delete-button"
+                    onClick={() => handleDelete(category._id)}
+                  >
+                    <AiFillDelete size={iconSize} />
+                  </button>
+                </div>
+              </li>
             ))}
           </ul>
 
           {visible && (
             <>
-              <hr className="edit-divider"/>
-              <p className="update-message"><IoIosAlert size={updateMessageIconSize} style={{ paddingRight: '3px' }} /> UPDATING [ <span>{selectedCategory}</span> ] . . .</p>
+              <hr className="edit-divider" />
+              <p className="update-message">
+                <IoIosAlert
+                  size={updateMessageIconSize}
+                  style={{ paddingRight: "3px" }}
+                />{" "}
+                UPDATING [ <span>{selectedCategory}</span> ] . . .
+              </p>
               <form className="update-form" ref={targetRef}>
                 <div className="update-list-left">
                   <label>
@@ -239,27 +257,38 @@ const ManageProducts = () => {
                     <input
                       type="text"
                       className="rate-input"
-                      style={ isMobile ? {marginLeft: "15px"} : {marginLeft: "25px"}}
+                      style={
+                        isMobile
+                          ? { marginLeft: "15px" }
+                          : { marginLeft: "25px" }
+                      }
                       value={rate}
                       onChange={(e) => setRate(e.target.value)}
                       required
                     />
                   </label>
                 </div>
-                
+
                 <div className="update-list-right">
-                  <button className="category-button update-button" type="submit" onClick={handleUpdate}>Update</button>
-                  <button 
-                    className="category-button cancel-button" 
-                    type="submit" 
+                  <button
+                    className="category-button update-button"
+                    type="submit"
+                    onClick={handleUpdate}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="category-button cancel-button"
+                    type="submit"
                     onClick={() => {
                       setVisible(false);
-                  }}>
+                    }}
+                  >
                     Cancel
                   </button>
                 </div>
               </form>
-              <hr className="edit-divider"/>
+              <hr className="edit-divider" />
             </>
           )}
           {/* <Category /> */}

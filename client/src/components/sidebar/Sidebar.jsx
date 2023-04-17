@@ -8,7 +8,7 @@ import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 
 const Sidebar = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");

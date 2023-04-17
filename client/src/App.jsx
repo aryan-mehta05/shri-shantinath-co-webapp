@@ -4,6 +4,8 @@ import Login from "./pages/login/Login";
 import AdminDashboard from "./pages/admin-dashboard/AdminDashboard";
 import UserDashboard from "./pages/user-dashboard/UserDashboard";
 import ManageProducts from "./pages/manage-products/ManageProducts";
+import CategoryProducts from "./pages/manage-products/CategoryProducts";
+import UpdateProduct from "./pages/manage-products/UpdateProduct";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -24,8 +26,10 @@ function App() {
       {user && !isAdmin() && (
         <Route path="/" exact element={<UserDashboard />} />
       )}
-      {user && (<Route path="/manage-products" element={<ManageProducts />} />)}
+      {user && <Route path="/manage-products" element={<ManageProducts />} />}
       <Route path="/login" exact element={<Login />} />
+      <Route path="/category/:slug" element={<CategoryProducts />} />
+      <Route path="/product/:slug" element={<UpdateProduct />} />
       <Route path="/" element={<Navigate replace to="/login" />} />
     </Routes>
   );
