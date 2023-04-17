@@ -106,9 +106,9 @@ const UpdateProduct = () => {
 
   const fetchProductImage = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/v1/product/product-photo/${id}`
-      );
+      // const response = await fetch(
+      //   `http://localhost:5000/api/v1/product/product-photo/${id}`
+      // );
       const blob = await response.clone().blob(); // clone the response before using it
       setPhoto(blob);
     } catch (error) {
