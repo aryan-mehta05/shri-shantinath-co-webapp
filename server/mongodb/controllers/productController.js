@@ -9,8 +9,9 @@ dotenv.config();
 
 const createProductController = async (req, res) => {
   try {
-    const { name, description, category, quantity } = req.fields;
+    const { name, description, category } = req.fields;
     const { photo } = req.files;
+    const colour = parseInt(req.fields.colour);
 
     // Validation
     if (!name) {
@@ -22,28 +23,60 @@ const createProductController = async (req, res) => {
     if (!category) {
       return res.status(400).json({ error: "Category is required" });
     }
-    if (!quantity) {
-      return res.status(400).json({ error: "Quantity is required" });
-    }
-    if (photo && photo.size > 1000000) {
+    if (isNaN(colour) || ![1, 2, 3, 4, 5, 6, 7, 8].includes(colour)) {
       return res
         .status(400)
-        .json({ error: "Photo is required and should be less than 1mb" });
+        .json({ error: "Colour is required and should be a valid value" });
+    }
+    if (photo && photo.length > 0) {
+      // check if there are any photos
+      for (let i = 0; i < photo.length; i++) {
+        if (photo[i].size > 1000000) {
+          // check if each photo size is less than 1mb
+          return res
+            .status(400)
+            .json({ error: "Photo is required and should be less than 1mb" });
+        }
+      }
     }
 
     const slug = slugify(name, { lower: true });
+
+    // Create an array of field names based on the colour value
+    const fields = [];
+    for (let i = 1; i <= colour; i++) {
+      fields.push(`A${i}`);
+      fields.push(`B${i}`);
+      fields.push(`C${i}`);
+    }
+
+    const quantity = fields.map((field) => {
+      if (req.fields[field]) {
+        return parseInt(req.fields[field]);
+      }
+      return 0;
+    });
+
+    const photos = [];
+    if (photo && photo.length > 0) {
+      // check if there are any photos
+      for (let i = 0; i < photo.length; i++) {
+        photos.push({
+          data: fs.readFileSync(photo[i].path),
+          contentType: photo[i].type,
+        });
+      }
+    }
+
     const product = new productModel({
       name,
       slug,
       description,
       category,
+      photo: photos,
+      colour,
       quantity,
     });
-
-    if (photo) {
-      product.photo.data = fs.readFileSync(photo.path);
-      product.photo.contentType = photo.type;
-    }
 
     await product.save();
 
@@ -54,6 +87,13 @@ const createProductController = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        error: "A product with the same name already exists",
+        message: "Error in creating product!",
+      });
+    }
     res.status(500).json({
       success: false,
       error: error.message,
@@ -112,15 +152,45 @@ const getSingleProductController = async (req, res) => {
 const productPhotoController = async (req, res) => {
   try {
     const product = await productModel.findById(req.params.pid).select("photo");
-    if (product.photo.data) {
-      res.set("Content-type", product.photo.contentType);
-      return res.status(200).send(product.photo.data);
+    if (product.photo.length > 0) {
+      const photo = product.photo[0];
+      res.set("Content-type", photo.contentType);
+      return res.status(200).send(photo.data);
+    } else {
+      return res.status(404).send({
+        success: false,
+        message: "Product photo not found",
+      });
     }
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while getting photo!",
+      error,
+    });
+  }
+};
+
+// get all photo
+const productAllPhotosController = async (req, res) => {
+  try {
+    const product = await productModel.findById(req.params.pid).select("photo");
+    const photos = product.photo;
+    if (photos.length > 0) {
+      res.set("Content-type", "application/json");
+      return res.status(200).send({ success: true, photos });
+    } else {
+      return res.status(404).send({
+        success: false,
+        message: "Product photos not found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error while getting photos!",
       error,
     });
   }
@@ -147,48 +217,90 @@ const deleteProductController = async (req, res) => {
 //upate products
 const updateProductController = async (req, res) => {
   try {
-    const { name, description, category, quantity } = req.fields;
+    const { name, description, category } = req.fields;
     const { photo } = req.files;
+    const colour = parseInt(req.fields.colour);
 
     // Validation
-    switch (true) {
-      case !name:
-        return res.status(500).send({ error: "Name is required" });
-      case !description:
-        return res.status(500).send({ error: "Description is required" });
-      case !category:
-        return res.status(500).send({ error: "Category is required" });
-      case !quantity:
-        return res.status(500).send({ error: "Quantity is required" });
-      case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "Photo is required and should be less than 1mb" });
+    if (!name) {
+      return res.status(400).json({ error: "Name is required" });
+    }
+    if (!description) {
+      return res.status(400).json({ error: "Description is required" });
+    }
+    if (!category) {
+      return res.status(400).json({ error: "Category is required" });
+    }
+    if (isNaN(colour) || ![1, 2, 3, 4, 5, 6, 7, 8].includes(colour)) {
+      return res
+        .status(400)
+        .json({ error: "Colour is required and should be a valid value" });
+    }
+    if (photo && photo.length > 0 && photo[0].size > 1000000) {
+      return res
+        .status(400)
+        .json({ error: "Photo is required and should be less than 1mb" });
+    }
+
+    const slug = slugify(name, { lower: true });
+
+    // Create an array of field names based on the colour value
+    const fields = [];
+    for (let i = 1; i <= colour; i++) {
+      fields.push(`A${i}`);
+      fields.push(`B${i}`);
+      fields.push(`C${i}`);
+    }
+
+    const updatedFields = {};
+    fields.forEach((field) => {
+      updatedFields[field] = req.fields[field]
+        ? parseInt(req.fields[field])
+        : 0;
+    });
+
+    const photos = [];
+    if (photo && photo.length > 0) {
+      // check if there are any photos
+      for (let i = 0; i < photo.length; i++) {
+        photos.push({
+          data: fs.readFileSync(photo[i].path),
+          contentType: photo[i].type,
+        });
+      }
     }
 
     const product = await productModel.findByIdAndUpdate(
       req.params.pid,
-      { ...req.fields, slug: slugify(name) },
+      {
+        name,
+        slug,
+        description,
+        category,
+        photo: photos,
+        colour,
+        quantity: Object.values(updatedFields),
+      },
       { new: true }
     );
 
-    if (photo) {
-      product.photo.data = fs.readFileSync(photo.path);
-      product.photo.contentType = photo.type;
-    }
-
-    await product.save();
-
-    res.status(201).send({
+    res.status(200).json({
       success: true,
       message: "Product updated successfully!",
       product,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        error: "A product with the same name already exists",
+        message: "Error in updating product!",
+      });
+    }
+    res.status(500).json({
       success: false,
-      error,
+      error: error.message,
       message: "Error in updating product!",
     });
   }
@@ -265,4 +377,5 @@ export {
   productCountController,
   searchProductController,
   productCategoryController,
+  productAllPhotosController,
 };

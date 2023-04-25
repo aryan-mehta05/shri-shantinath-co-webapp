@@ -46,7 +46,7 @@ const CategoryProducts = () => {
               />
               <div className="product-details">
                 <h3 className="product-name">Name: {product.name}</h3>
-                <p className="product-quantity">Quantity: {product.quantity}</p>
+                <p className="product-quantity">Colour: {product.colour}</p>
                 <p className="product-description">
                   Description: {product.description}
                 </p>
